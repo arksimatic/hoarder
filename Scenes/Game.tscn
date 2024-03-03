@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2nhvxq6h7tyo"]
+
+[ext_resource type="Texture2D" uid="uid://kos750aodh63" path="res://icon.svg" id="1_ubt82"]
+[ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="2_5j72e"]
+[ext_resource type="Script" path="res://Scripts/TestScript.cs" id="2_iy3dm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_omacf"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("1_ubt82")
+
+[node name="Timer" type="Timer" parent="Icon"]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(526, 123)
+texture = ExtResource("1_ubt82")
+script = ExtResource("2_iy3dm")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("2_5j72e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_omacf")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(181, 230)
+texture = ExtResource("1_ubt82")
+
+[connection signal="timeout" from="Icon/Timer" to="Sprite2D" method="_on_timer_timeout"]
