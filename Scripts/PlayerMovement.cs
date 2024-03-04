@@ -10,7 +10,7 @@ public partial class PlayerMovement : CharacterBody2D
 
     public override void _PhysicsProcess(Double delta)
     {
-        Move(delta);
+        UpdateMovement(delta);
     }
 
     public Vector2 GetInputAxis()
@@ -23,26 +23,34 @@ public partial class PlayerMovement : CharacterBody2D
         return new Vector2(right - left, down - up);
     }
 
-    public void Move(Double delta)
+    public void UpdateMovement(Double delta)
     {
         Vector2 axis = GetInputAxis();
-        if(axis.X == 0 && axis.Y == 0)
-        {
-            Single frictionDelta = FRICTION * Convert.ToSingle(delta);
-            Single xSlowDown = Velocity.Normalized().X * frictionDelta;
-            Single ySlowDown = Velocity.Normalized().Y * frictionDelta;
-            if (Velocity.Length() > frictionDelta)
-                Velocity = new Vector2(Velocity.X - xSlowDown, Velocity.Y - ySlowDown);
-            else
-                Velocity = Vector2.Zero;
-        }
+        Single deltaSingle = Convert.ToSingle(delta);
+
+        if (axis.X == 0 && axis.Y == 0)
+            Slide(deltaSingle);
         else
-        {
-            Vector2 axisAccelerationDelta = new Vector2(axis.X * ACCELERATION * Convert.ToSingle(delta), axis.Y * ACCELERATION * Convert.ToSingle(delta));
-            Velocity += axisAccelerationDelta;
-            Velocity = Velocity.LimitLength(MAX_SPEED);
-        }
+            Move(deltaSingle);
 
         MoveAndSlide();
+    }
+
+    public void Slide(Single deltaSingle)
+    {
+        Single frictionDelta = FRICTION * deltaSingle;
+        Single xSlowDown = Velocity.Normalized().X * frictionDelta;
+        Single ySlowDown = Velocity.Normalized().Y * frictionDelta;
+        if (Velocity.Length() > frictionDelta)
+            Velocity = new Vector2(Velocity.X - xSlowDown, Velocity.Y - ySlowDown);
+        else
+            Velocity = Vector2.Zero;
+    }
+
+    public void Move(Single deltaSingle)
+    {
+        Vector2 axisAccelerationDelta = new Vector2(axis.X * ACCELERATION * deltaSingle, axis.Y * ACCELERATION * deltaSingle);
+        Velocity += axisAccelerationDelta;
+        Velocity = Velocity.LimitLength(MAX_SPEED);
     }
 }
