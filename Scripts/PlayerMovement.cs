@@ -31,7 +31,7 @@ public partial class PlayerMovement : CharacterBody2D
         if (axis.X == 0 && axis.Y == 0)
             Slide(deltaSingle);
         else
-            Move(deltaSingle);
+            Move(deltaSingle, axis);
 
         MoveAndSlide();
     }
@@ -47,7 +47,7 @@ public partial class PlayerMovement : CharacterBody2D
             Velocity = Vector2.Zero;
     }
 
-    public void Move(Single deltaSingle)
+    public void Move(Single deltaSingle, Vector2 axis)
     {
         Vector2 axisAccelerationDelta = new Vector2(axis.X * ACCELERATION * deltaSingle, axis.Y * ACCELERATION * deltaSingle);
         Velocity += axisAccelerationDelta;
