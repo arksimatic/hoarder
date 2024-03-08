@@ -1,10 +1,50 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2nhvxq6h7tyo"]
+[gd_scene load_steps=8 format=3 uid="uid://b2nhvxq6h7tyo"]
 
 [ext_resource type="Texture2D" uid="uid://kos750aodh63" path="res://icon.svg" id="1_ubt82"]
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="2_5j72e"]
-[ext_resource type="Script" path="res://Scripts/TestScript.cs" id="2_iy3dm"]
+[ext_resource type="Texture2D" uid="uid://dbweehxy1g8k7" path="res://Graphics/hoarder-move-left-Sheet.png" id="3_r1mld"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_xxen2"]
+script/source = "using Godot;
+using System;
+
+public partial class TestScript : Node
+{
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+}
+"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_omacf"]
+
+[sub_resource type="Animation" id="Animation_aadxj"]
+resource_name = "walk_left"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2p5ju"]
+_data = {
+"walk_left": SubResource("Animation_aadxj")
+}
 
 [node name="Node2D" type="Node2D"]
 
@@ -19,7 +59,7 @@ autostart = true
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(526, 123)
 texture = ExtResource("1_ubt82")
-script = ExtResource("2_iy3dm")
+script = SubResource("CSharpScript_xxen2")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("2_5j72e")
@@ -28,7 +68,16 @@ script = ExtResource("2_5j72e")
 shape = SubResource("CircleShape2D_omacf")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture_filter = 1
 position = Vector2(181, 230)
-texture = ExtResource("1_ubt82")
+texture = ExtResource("3_r1mld")
+hframes = 6
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D/Sprite2D"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_2p5ju")
+}
 
 [connection signal="timeout" from="Icon/Timer" to="Sprite2D" method="_on_timer_timeout"]
