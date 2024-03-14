@@ -1,26 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2nhvxq6h7tyo"]
+[gd_scene load_steps=7 format=3 uid="uid://b2nhvxq6h7tyo"]
 
-[ext_resource type="Texture2D" uid="uid://kos750aodh63" path="res://icon.svg" id="1_ubt82"]
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="2_5j72e"]
+[ext_resource type="Texture2D" uid="uid://c8fb38mivgtvr" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forestPath_.png" id="2_mtwoh"]
 [ext_resource type="Texture2D" uid="uid://dbweehxy1g8k7" path="res://Graphics/hoarder-move-left-Sheet.png" id="3_r1mld"]
-
-[sub_resource type="CSharpScript" id="CSharpScript_xxen2"]
-script/source = "using Godot;
-using System;
-
-public partial class TestScript : Node
-{
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-}
-"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_omacf"]
 
@@ -48,18 +30,10 @@ _data = {
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Icon" type="Sprite2D" parent="."]
-texture = ExtResource("1_ubt82")
-
-[node name="Timer" type="Timer" parent="Icon"]
-wait_time = 2.0
-one_shot = true
-autostart = true
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(526, 123)
-texture = ExtResource("1_ubt82")
-script = SubResource("CSharpScript_xxen2")
+[node name="ForestPath" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(235, 236)
+texture = ExtResource("2_mtwoh")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("2_5j72e")
@@ -69,10 +43,9 @@ shape = SubResource("CircleShape2D_omacf")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture_filter = 1
-position = Vector2(181, 230)
+position = Vector2(212, 228)
 texture = ExtResource("3_r1mld")
 hframes = 6
-frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D/Sprite2D"]
 root_node = NodePath("../..")
@@ -80,4 +53,8 @@ libraries = {
 "": SubResource("AnimationLibrary_2p5ju")
 }
 
-[connection signal="timeout" from="Icon/Timer" to="Sprite2D" method="_on_timer_timeout"]
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+position = Vector2(210, 230)
+zoom = Vector2(4, 4)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
