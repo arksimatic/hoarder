@@ -19,7 +19,6 @@ public partial class PlayerMovement : CharacterBody2D
         Int32 right = Convert.ToInt32(Input.IsActionPressed("move_right"));
         Int32 up = Convert.ToInt32(Input.IsActionPressed("move_up"));
         Int32 down = Convert.ToInt32(Input.IsActionPressed("move_down"));
-	
         return new Vector2(right - left, down - up);
     }
 
