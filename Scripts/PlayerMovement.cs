@@ -7,7 +7,11 @@ public partial class PlayerMovement : CharacterBody2D
     public Single MAX_SPEED = 500;
     public Single ACCELERATION = 1000;
     public Single FRICTION = 1000;
-
+    private AnimationPlayer _animationPlayer;
+    public override void _Ready()
+    {
+        _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+    }
     public override void _PhysicsProcess(Double delta)
     {
         UpdateMovement(delta);
@@ -15,6 +19,7 @@ public partial class PlayerMovement : CharacterBody2D
 
     public Vector2 GetInputAxis()
     {
+        _animationPlayer.Play("new_animation");
         Int32 left = Convert.ToInt32(Input.IsActionPressed("move_left"));
         Int32 right = Convert.ToInt32(Input.IsActionPressed("move_right"));
         Int32 up = Convert.ToInt32(Input.IsActionPressed("move_up"));

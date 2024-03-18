@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2nhvxq6h7tyo"]
+[gd_scene load_steps=18 format=3 uid="uid://b2nhvxq6h7tyo"]
 
 [ext_resource type="Texture2D" uid="uid://dh6i2fff606ne" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_.png" id="1_m6apn"]
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="2_5j72e"]
 [ext_resource type="Texture2D" uid="uid://dj4231x5jb5hg" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_ [resources].png" id="2_b87qm"]
-[ext_resource type="Texture2D" uid="uid://dbweehxy1g8k7" path="res://Graphics/hoarder-move-left-Sheet.png" id="3_r1mld"]
+[ext_resource type="Texture2D" uid="uid://dbweehxy1g8k7" path="res://Graphics/hoarder-move-left-Sheet.png" id="4_pckrd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ar8jt"]
 texture = ExtResource("1_m6apn")
@@ -221,6 +221,56 @@ _data = {
 "walk_left": SubResource("Animation_aadxj")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8hws"]
+atlas = ExtResource("4_pckrd")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqg4v"]
+atlas = ExtResource("4_pckrd")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdve6"]
+atlas = ExtResource("4_pckrd")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d68ko"]
+atlas = ExtResource("4_pckrd")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dsmy"]
+atlas = ExtResource("4_pckrd")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfgw4"]
+atlas = ExtResource("4_pckrd")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gb7mr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y8hws")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqg4v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdve6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d68ko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dsmy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lfgw4")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -235,9 +285,9 @@ script = ExtResource("2_5j72e")
 shape = SubResource("CircleShape2D_omacf")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+visible = false
 texture_filter = 1
 position = Vector2(212, 228)
-texture = ExtResource("3_r1mld")
 hframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D/Sprite2D"]
@@ -251,3 +301,8 @@ position = Vector2(210, 230)
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_gb7mr")
+animation = &"new_animation"
+frame_progress = 0.99757
