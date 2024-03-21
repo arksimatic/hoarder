@@ -17,7 +17,6 @@ func get_input_axis():
 	var right = int(Input.is_action_pressed("move_right"))
 	var up = int(Input.is_action_pressed("move_up"))
 	var down = int(Input.is_action_pressed("move_down"))
-	
 	return Vector2(right - left, down - up)
 
 func update_movement(delta):
