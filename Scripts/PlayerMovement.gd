@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-var MAX_SPEED = 500
-var ACCELERATION = 1000
-var FRICTION = 1000
+var MAX_SPEED = 100
+var ACCELERATION = 200
+var FRICTION = 10000
 var _animationPlayer
 
 func _ready():
