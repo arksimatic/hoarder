@@ -7,7 +7,12 @@ public partial class PlayerMovement : CharacterBody2D
 	public Single MAX_SPEED = 500;
 	public Single ACCELERATION = 1000;
 	public Single FRICTION = 1000;
+	private AnimationPlayer _animationPlayer;
 
+	public override void _Ready()
+	{
+		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+	}
 	public override void _PhysicsProcess(Double delta)
 	{
 		UpdateMovement(delta);
