@@ -8,53 +8,58 @@ public partial class PlayerMovement : CharacterBody2D
 	public Single ACCELERATION = 1000;
 	public Single FRICTION = 1000;
 	private AnimationPlayer _animationPlayer;
-
+	private AnimationTree _animationTree;
+	private AnimationNodeStateMachinePlayback _stateMachine;
 	public override void _Ready()
 	{
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		_animationTree = GetNode<AnimationTree>("AnimationTree");
+		_stateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
+	}
+	public override void _Process(Double delta)
+	{
+		UpdateAnimation();
+		UpdateMovement(delta);
 	}
 	public override void _PhysicsProcess(Double delta)
 	{
-		UpdateMovement(delta);
 	}
-
-	public Vector2 GetInputAxis()
+	public Vector2 GetInputVector()
 	{
-		Int32 left = Convert.ToInt32(Input.IsActionPressed("move_left"));
-		Int32 right = Convert.ToInt32(Input.IsActionPressed("move_right"));
-		Int32 up = Convert.ToInt32(Input.IsActionPressed("move_up"));
-		Int32 down = Convert.ToInt32(Input.IsActionPressed("move_down"));
-		return new Vector2(right - left, down - up);
-	}
+		Vector2 vector2 = Vector2.Zero;
+		if (Input.IsActionPressed("ui_right"))
+			vector2 = new Vector2(vector2.X + 1, vector2.Y);
+		if (Input.IsActionPressed("ui_left"))
+			vector2 = new Vector2(vector2.X - 1, vector2.Y);
+		if (Input.IsActionPressed("ui_down"))
+			vector2 = new Vector2(vector2.X, vector2.Y + 1);
+		if (Input.IsActionPressed("ui_up"))
+			vector2 = new Vector2(vector2.X, vector2.Y - 1);
 
+		return vector2;
+	}
+	private void UpdateAnimation()
+	{
+		Vector2 inputVector = GetInputVector();
+		if (inputVector != Vector2.Zero)
+		{
+			_animationTree.Set("parameters/Move/blend_position", inputVector);
+			_animationTree.Set("parameters/Idle/blend_position", inputVector);
+			_stateMachine.Travel("Move");
+		}
+		else
+		{
+			_stateMachine.Travel("Idle");
+		}
+	}
 	public void UpdateMovement(Double delta)
 	{
-		Vector2 axis = GetInputAxis();
-		Single deltaSingle = Convert.ToSingle(delta);
-
-		if (axis.X == 0 && axis.Y == 0)
-			Slide(deltaSingle);
-		else
-			Move(deltaSingle, axis);
-
-		MoveAndSlide();
-	}
-
-	public void Slide(Single deltaSingle)
-	{
-		Single frictionDelta = FRICTION * deltaSingle;
-		Single xSlowDown = Velocity.Normalized().X * frictionDelta;
-		Single ySlowDown = Velocity.Normalized().Y * frictionDelta;
-		if (Velocity.Length() > frictionDelta)
-			Velocity = new Vector2(Velocity.X - xSlowDown, Velocity.Y - ySlowDown);
-		else
-			Velocity = Vector2.Zero;
-	}
-
-	public void Move(Single deltaSingle, Vector2 axis)
-	{
-		Vector2 axisAccelerationDelta = new Vector2(axis.X * ACCELERATION * deltaSingle, axis.Y * ACCELERATION * deltaSingle);
-		Velocity += axisAccelerationDelta;
-		Velocity = Velocity.LimitLength(MAX_SPEED);
+		Velocity = GetInputVector();
+		Velocity = Velocity.Normalized();
+		if (Velocity != Vector2.Zero)
+		{
+			Velocity = Velocity * Convert.ToInt32(delta * 25_000);
+			MoveAndSlide();
+		}
 	}
 }
