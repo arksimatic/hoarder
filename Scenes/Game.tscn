@@ -1,9 +1,12 @@
-[gd_scene load_steps=33 format=3 uid="uid://b2nhvxq6h7tyo"]
+[gd_scene load_steps=36 format=3 uid="uid://b2nhvxq6h7tyo"]
 
 [ext_resource type="Texture2D" uid="uid://dh6i2fff606ne" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_.png" id="1_m6apn"]
 [ext_resource type="Texture2D" uid="uid://dj4231x5jb5hg" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_ [resources].png" id="2_b87qm"]
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="3_8uvfh"]
+[ext_resource type="Script" path="res://Scripts/NodeTest.cs" id="4_cpxa5"]
 [ext_resource type="Texture2D" uid="uid://gmlfu1741l1f" path="res://Graphics/hoarder.png" id="4_neymw"]
+[ext_resource type="Texture2D" uid="uid://csemesk0nus1j" path="res://Graphics/Equippable/pickaxe.png" id="5_wed6p"]
+[ext_resource type="Script" path="res://Scripts/Equippable.cs" id="6_83t8l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ar8jt"]
 texture = ExtResource("1_m6apn")
@@ -434,11 +437,6 @@ layer_0/tile_data = PackedInt32Array(983054, 720898, 3, 983053, 720898, 4, 98305
 [node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("3_8uvfh")
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(4, 4)
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
-
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture = ExtResource("4_neymw")
 hframes = 6
@@ -458,3 +456,16 @@ anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/Idle/blend_position = Vector2(1.12339, -0.218107)
 parameters/Move/blend_position = Vector2(-1, 0.00411522)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(4, 4)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="Node2D" type="Node2D" parent="Player"]
+script = ExtResource("4_cpxa5")
+
+[node name="Equippable" type="Sprite2D" parent="Player/Node2D"]
+position = Vector2(3, 0)
+texture = ExtResource("5_wed6p")
+script = ExtResource("6_83t8l")
