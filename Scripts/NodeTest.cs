@@ -13,7 +13,6 @@ namespace Hoarder.Scripts
 		{
 			//GD.Print("NodeTest Global Position: " + GlobalPosition);
 			//GD.Print("Equippable Global Position: " + GetNode<Node2D>("Equippable").GlobalPosition);
-
 			//Node parentNode = GetParent();
 			//if (parentNode != null)
 			//{
