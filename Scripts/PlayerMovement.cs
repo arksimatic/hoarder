@@ -1,4 +1,5 @@
 using Godot;
+using Hoarder.Scripts;
 using System;
 using System.Net;
 
@@ -27,24 +28,37 @@ public partial class PlayerMovement : CharacterBody2D
 	public Vector2 GetInputVector()
 	{
 		Vector2 vector2 = Vector2.Zero;
-		if (Input.IsActionPressed("ui_right"))
+		if (Input.IsActionPressed(KeyCode.Right))
 			vector2 = new Vector2(vector2.X + 1, vector2.Y);
-		if (Input.IsActionPressed("ui_left"))
+		if (Input.IsActionPressed(KeyCode.Left))
 			vector2 = new Vector2(vector2.X - 1, vector2.Y);
-		if (Input.IsActionPressed("ui_down"))
+		if (Input.IsActionPressed(KeyCode.Down))
 			vector2 = new Vector2(vector2.X, vector2.Y + 1);
-		if (Input.IsActionPressed("ui_up"))
+		if (Input.IsActionPressed(KeyCode.Up))
 			vector2 = new Vector2(vector2.X, vector2.Y - 1);
 
 		return vector2;
 	}
 	private void UpdateAnimation()
 	{
+		// check whether mouse button is pressed
+		Boolean isAction = Input.IsActionPressed(KeyCode.Action);
+
+		// setting vectors for the animation tree
 		Vector2 inputVector = GetInputVector();
 		if (inputVector != Vector2.Zero)
 		{
 			_animationTree.Set("parameters/Move/blend_position", inputVector);
 			_animationTree.Set("parameters/Idle/blend_position", inputVector);
+			_animationTree.Set("parameters/Action/blend_position", inputVector);
+		}
+
+		if (isAction)
+		{
+			_stateMachine.Travel("Action");
+		}
+		else if (inputVector != Vector2.Zero)
+		{
 			_stateMachine.Travel("Move");
 		}
 		else
