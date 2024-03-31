@@ -37,7 +37,7 @@ public partial class PlayerMovement : CharacterBody2D
 		if (Input.IsActionPressed(KeyCode.Up))
 			vector2 = new Vector2(vector2.X, vector2.Y - 1);
 
-		return vector2;
+		return vector2.Normalized();
 	}
 	private void UpdateAnimation()
 	{
@@ -68,11 +68,10 @@ public partial class PlayerMovement : CharacterBody2D
 	}
 	public void UpdateMovement(Double delta)
 	{
-		Velocity = GetInputVector();
-		Velocity = Velocity.Normalized();
-		if (Velocity != Vector2.Zero)
+		Vector2 newVelocity = GetInputVector();
+		if (newVelocity != Vector2.Zero)
 		{
-			Velocity = Velocity * Convert.ToInt32(delta * 25_000);
+			Velocity = newVelocity.Normalized() * Convert.ToInt32(delta * 25_000);
 			MoveAndSlide();
 		}
 	}

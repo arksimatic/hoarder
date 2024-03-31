@@ -1,9 +1,8 @@
-[gd_scene load_steps=47 format=3 uid="uid://b2nhvxq6h7tyo"]
+[gd_scene load_steps=46 format=3 uid="uid://b2nhvxq6h7tyo"]
 
 [ext_resource type="Texture2D" uid="uid://dh6i2fff606ne" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_.png" id="1_m6apn"]
 [ext_resource type="Texture2D" uid="uid://dj4231x5jb5hg" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_ [resources].png" id="2_b87qm"]
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="3_8uvfh"]
-[ext_resource type="Script" path="res://Scripts/NodeTest.cs" id="4_cpxa5"]
 [ext_resource type="Texture2D" uid="uid://gmlfu1741l1f" path="res://Graphics/hoarder.png" id="4_neymw"]
 [ext_resource type="Texture2D" uid="uid://csemesk0nus1j" path="res://Graphics/Equippable/pickaxe.png" id="5_wed6p"]
 [ext_resource type="Script" path="res://Scripts/Equippable.cs" id="6_83t8l"]
@@ -230,6 +229,23 @@ tracks/1/keys = {
 "values": [0.872665]
 }
 
+[sub_resource type="Animation" id="Animation_g48xt"]
+resource_name = "use_equippable"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Equippable:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.872665, 0.0]
+}
+
 [sub_resource type="Animation" id="Animation_xy7bb"]
 resource_name = "idle_down"
 length = 0.6
@@ -364,35 +380,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_g48xt"]
-resource_name = "use_equippable"
-length = 0.6
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Equippable:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 0.872665, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [17]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fwetb"]
@@ -541,13 +528,12 @@ zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
-[node name="Equippable" type="Node2D" parent="Player"]
+[node name="Equippable" type="CharacterBody2D" parent="Player"]
 rotation = 0.872665
-script = ExtResource("4_cpxa5")
+script = ExtResource("6_83t8l")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/Equippable"]
 texture = ExtResource("5_wed6p")
-script = ExtResource("6_83t8l")
 
 [node name="Coal" type="Node2D" parent="."]
 
