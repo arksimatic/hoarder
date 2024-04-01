@@ -10,22 +10,26 @@ namespace Hoarder.Scripts
 	public partial class Equippable : CharacterBody2D
 	{
 		private Sprite2D _childSprite2D;
+		private CharacterBody2D _parent;
+		private AnimationPlayer _animationPlayer;
 		public override void _Ready()
 		{
 			_childSprite2D = (Sprite2D)GetNode("Sprite2D");
+			_parent = (CharacterBody2D)GetParent();
+			_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		}
 		public override void _Process(Double delta)
 		{
 			Move(delta);
 			SwapEquippable();
+			FlipEquippable();
 		}
 
 		private void Move(Double delta)
 		{
 			Vector2 mouse_position = GetGlobalMousePosition();
-			CharacterBody2D parent = (CharacterBody2D)GetParent();
-
-			Vector2 destination = NormalizeToPlayerCircle(mouse_position, parent.GlobalPosition);
+			
+			Vector2 destination = TrimToPlayerCircle(mouse_position, _parent.GlobalPosition);
 
 			Vector2 direction = destination - GlobalPosition;
 
@@ -41,25 +45,7 @@ namespace Hoarder.Scripts
 			}
 		}
 
-		private Vector2 NormalizeToPlayerSquare(Vector2 mousePosition, Vector2 parentPosition)
-		{
-			Single destinationX = mousePosition.X;
-			Single destinationY = mousePosition.Y;
-
-			if (mousePosition.X < parentPosition.X - 10)
-				destinationX = parentPosition.X - 10;
-			if (mousePosition.X > parentPosition.X + 10)
-				destinationX = parentPosition.X + 10;
-			if (mousePosition.Y < parentPosition.Y - 10)
-				destinationY = parentPosition.Y - 10;
-			if (mousePosition.Y > parentPosition.Y + 10)
-				destinationY = parentPosition.Y + 10;
-
-			Vector2 destination = new Vector2(destinationX, destinationY);
-			return destination;
-		}
-
-		private Vector2 NormalizeToPlayerCircle(Vector2 mousePosition, Vector2 parentPosition)
+		private Vector2 TrimToPlayerCircle(Vector2 mousePosition, Vector2 parentPosition)
 		{
 			Vector2 destination = mousePosition;
 			Vector2 direction = (destination - parentPosition).Normalized();
@@ -85,6 +71,14 @@ namespace Hoarder.Scripts
 				var texture = (Texture2D)resource;
 				_childSprite2D.Texture = texture;
 			}
+		}
+
+		public void FlipEquippable()
+		{
+			if (_parent.GlobalPosition.X < GlobalPosition.X)
+				_childSprite2D.Scale = new Vector2(1, 1);
+			else
+				_childSprite2D.Scale = new Vector2(-1, -1);
 		}
 	}
 }
