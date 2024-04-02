@@ -42,7 +42,7 @@ public partial class PlayerMovement : CharacterBody2D
 	private void UpdateAnimation()
 	{
 		// check whether mouse button is pressed
-		Boolean isAction = Input.IsActionPressed(KeyCode.Action);
+		//Boolean isAction = Input.IsActionPressed(KeyCode.Action);
 
 		// setting vectors for the animation tree
 		Vector2 inputVector = GetInputVector();
@@ -50,14 +50,14 @@ public partial class PlayerMovement : CharacterBody2D
 		{
 			_animationTree.Set("parameters/Move/blend_position", inputVector);
 			_animationTree.Set("parameters/Idle/blend_position", inputVector);
-			_animationTree.Set("parameters/Action/blend_position", inputVector);
+			//_animationTree.Set("parameters/Action/blend_position", inputVector);
 		}
 
-		if (isAction)
-		{
-			_stateMachine.Travel("Action");
-		}
-		else if (inputVector != Vector2.Zero)
+		//if (isAction)
+		//{
+		//	_stateMachine.Travel("Action");
+		//}
+		if (inputVector != Vector2.Zero)
 		{
 			_stateMachine.Travel("Move");
 		}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b2nhvxq6h7tyo"]
+[gd_scene load_steps=51 format=3 uid="uid://b2nhvxq6h7tyo"]
 
 [ext_resource type="Texture2D" uid="uid://dh6i2fff606ne" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_.png" id="1_m6apn"]
 [ext_resource type="Texture2D" uid="uid://dj4231x5jb5hg" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_ [resources].png" id="2_b87qm"]
@@ -457,6 +457,49 @@ states/Move/position = Vector2(544, 213)
 states/Start/position = Vector2(262, 116)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_kuguh"), "Idle", "Move", SubResource("AnimationNodeStateMachineTransition_xaxo5"), "Move", "Idle", SubResource("AnimationNodeStateMachineTransition_xnldx")]
 
+[sub_resource type="Animation" id="Animation_4xhfx"]
+resource_name = "mine_left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(4, 4.5), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.785398, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_m8x26"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3.95358, 4.62276)]
+}
+
 [sub_resource type="Animation" id="Animation_51ykm"]
 resource_name = "action"
 loop_mode = 1
@@ -470,7 +513,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3, 0.3001, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(3.95348, 4.62277), Vector2(2.54465, 4.74603), Vector2(0, 0)]
+"values": [Vector2(0, 0), Vector2(3.95358, 4.62276), Vector2(2.54465, 4.74603), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -487,12 +530,34 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0rwr0"]
 _data = {
-"action": SubResource("Animation_51ykm")
+"RESET": SubResource("Animation_m8x26"),
+"mine_left": SubResource("Animation_4xhfx"),
+"mine_right": SubResource("Animation_51ykm")
 }
 
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_n7j35"]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6dsdt"]
+animation = &"mine_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_owdnh"]
+animation = &"mine_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7rao2"]
+animation = &"mine_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_g6xsa"]
+animation = &"mine_right"
+
 [sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_n81ok"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_6dsdt")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_owdnh")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_7rao2")
+blend_point_2/pos = Vector2(-1, 0.7)
+blend_point_3/node = SubResource("AnimationNodeAnimation_g6xsa")
+blend_point_3/pos = Vector2(0.9, 0.5)
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jouk1"]
 
@@ -505,7 +570,7 @@ states/End/position = Vector2(809, 129)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_n7j35")
 states/Idle/position = Vector2(386, 129)
 states/Mine/node = SubResource("AnimationNodeBlendSpace2D_n81ok")
-states/Mine/position = Vector2(597, 129)
+states/Mine/position = Vector2(596, 129)
 states/Start/position = Vector2(199, 129)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_jouk1"), "Idle", "Mine", SubResource("AnimationNodeStateMachineTransition_vxr4g"), "Mine", "Idle", SubResource("AnimationNodeStateMachineTransition_ba1qr")]
 
@@ -546,11 +611,12 @@ zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
-[node name="Equippable" type="CharacterBody2D" parent="Player"]
+[node name="Equippable" type="Node2D" parent="Player"]
 rotation = 0.872665
 script = ExtResource("6_83t8l")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player/Equippable"]
+position = Vector2(3.95358, 4.62276)
 texture = ExtResource("5_wed6p")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Equippable"]
@@ -559,9 +625,13 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="Player/Equippable"]
+libraries = {
+"": SubResource("AnimationLibrary_0rwr0")
+}
 tree_root = SubResource("AnimationNodeStateMachine_ywrl6")
-parameters/Idle/blend_position = Vector2(0, 0)
-parameters/Mine/blend_position = Vector2(0, 0)
+anim_player = NodePath("../AnimationPlayer")
+parameters/Idle/blend_position = Vector2(-0.103685, -0.309645)
+parameters/Mine/blend_position = Vector2(-0.976007, 0.846809)
 
 [node name="Coal" type="Node2D" parent="."]
 
