@@ -16,6 +16,9 @@ namespace Hoarder.Scripts
 		private AnimationNodeStateMachinePlayback _stateMachine;
 
 		private Boolean _isRightDirection;
+		private Single _imageShiftX = 7f;
+		private Single _imageShiftY = -4f;
+		private Single _buffer => _imageShiftX + 1f;
 		public override void _Ready()
 		{
 			_childSprite2D = (Sprite2D)GetNode("Sprite2D");
@@ -25,11 +28,6 @@ namespace Hoarder.Scripts
 			_stateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
 
 			_isRightDirection = _parent.GlobalPosition.X < GlobalPosition.X;
-		}
-
-		public Vector2 GetVector2()
-		{
-			return _isRightDirection ? new Vector2(1, 0) : new Vector2(-1, 0);
 		}
 		public override void _Process(Double delta)
 		{
@@ -61,7 +59,8 @@ namespace Hoarder.Scripts
 
 		private Vector2 TrimToPlayerCircle(Vector2 mousePosition, Vector2 parentPosition)
 		{
-			Vector2 destination = mousePosition;
+			Vector2 shift = _isRightDirection ? new Vector2(-_imageShiftX, _imageShiftY) : new Vector2(_imageShiftX, _imageShiftY);
+			Vector2 destination = mousePosition + shift;
 			Vector2 direction = (destination - parentPosition).Normalized();
 			Single distance = parentPosition.DistanceTo(destination);
 			if (distance > 20)
@@ -89,14 +88,14 @@ namespace Hoarder.Scripts
 
 		public void FlipEquippable()
 		{
-			if (_parent.GlobalPosition.X < GlobalPosition.X && !_isRightDirection)
+			if (_parent.GlobalPosition.X < GlobalPosition.X - _buffer && !_isRightDirection)
 			{
 				_isRightDirection = true;
 				Scale = new Vector2(1, 1);
 				return;
 			}
 
-			if(_parent.GlobalPosition.X > GlobalPosition.X && _isRightDirection)
+			if(_parent.GlobalPosition.X > GlobalPosition.X + _buffer && _isRightDirection)
 			{
 				_isRightDirection = false;
 				Scale = new Vector2(-1, 1);
