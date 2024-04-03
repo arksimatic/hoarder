@@ -37,13 +37,10 @@ namespace Hoarder.Scripts
 			SwapEquippable();
 			FlipEquippable();
 			UpdateAnimation();
-			//GD.Print(Scale);
 		}
 		private void UpdateAnimation()
 		{
 			Boolean isAction = Input.IsActionPressed(KeyCode.Action);
-
-			_animationTree.Set("parameters/Mine/blend_position", GetVector2());
 
 			if (isAction)
 			{
@@ -54,33 +51,11 @@ namespace Hoarder.Scripts
 				_stateMachine.Travel("Idle");
 			}
 		}
-		//private void Move(Double delta)
-		//{
-		//	Vector2 mouse_position = GetGlobalMousePosition();
-			
-		//	Vector2 destination = TrimToPlayerCircle(mouse_position, _parent.GlobalPosition);
-
-		//	Vector2 direction = destination - GlobalPosition;
-
-		//	// This if prevents from smuggy/laggy effect of the sprite. It was probably caused by rapid movement of the sprite
-		//	if (direction.Length() > 1)
-		//	{
-		//		Single speed = direction.Length() * 25_000;
-		//		Vector2 directionDelta = direction.Normalized() * Convert.ToInt32(delta * speed);
-		//		Vector2 newVelocity = new Vector2((Single)Math.Round(directionDelta.X), (Single)Math.Round(directionDelta.Y));
-
-		//		Velocity = newVelocity;
-		//		MoveAndSlide();
-		//	}
-		//}
 
 		private void Move(Double delta)
 		{
 			Vector2 mouse_position = GetGlobalMousePosition();
 			Vector2 destination = TrimToPlayerCircle(mouse_position, _parent.GlobalPosition);
-			//GD.Print(mouse_position);
-			//GD.Print(_parent.GlobalPosition);
-			//GD.Print("Dest " + destination);
 			GlobalPosition = GlobalPosition.MoveToward(destination, Convert.ToSingle(delta * 25_000));
 		}
 
@@ -89,9 +64,9 @@ namespace Hoarder.Scripts
 			Vector2 destination = mousePosition;
 			Vector2 direction = (destination - parentPosition).Normalized();
 			Single distance = parentPosition.DistanceTo(destination);
-			if (distance > 10)
+			if (distance > 20)
 			{
-				destination = parentPosition + direction * 10;
+				destination = parentPosition + direction * 20;
 			}
 			return destination;
 		}
@@ -116,19 +91,15 @@ namespace Hoarder.Scripts
 		{
 			if (_parent.GlobalPosition.X < GlobalPosition.X && !_isRightDirection)
 			{
-				//GD.Print("Swap to right");
 				_isRightDirection = true;
 				Scale = new Vector2(1, 1);
-				//_childSprite2D.Scale = new Vector2(1, 1);
 				return;
 			}
 
 			if(_parent.GlobalPosition.X > GlobalPosition.X && _isRightDirection)
 			{
-				//GD.Print("Swap to left");
 				_isRightDirection = false;
-				Scale = new Vector2(-1, -1);
-				//_childSprite2D.Scale = new Vector2(-1, -1);
+				Scale = new Vector2(-1, 1);
 				return;
 			}
 		}
