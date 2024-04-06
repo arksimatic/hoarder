@@ -12,6 +12,7 @@ namespace Hoarder.Scripts
         private PackedScene ItemClass = (PackedScene)ResourceLoader.Load("res://Scenes//Item.tscn");
         private Node2D _item;
         private GridContainer _inventoryGrid;
+
         public override void _Ready()
         {
             _inventoryGrid = GetNode<GridContainer>("Inventory");
