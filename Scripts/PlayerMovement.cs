@@ -11,6 +11,7 @@ public partial class PlayerMovement : CharacterBody2D
 	private AnimationPlayer _animationPlayer;
 	private AnimationTree _animationTree;
 	private AnimationNodeStateMachinePlayback _stateMachine;
+
 	public override void _Ready()
 	{
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
