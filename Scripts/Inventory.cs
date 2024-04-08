@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hoarder.Scripts
 {
-    public partial class Inventory : Node2D
-    {
-
-    }
+	public partial class Inventory : Node2D
+	{
+	}
 }
