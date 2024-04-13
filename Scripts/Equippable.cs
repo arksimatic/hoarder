@@ -28,6 +28,8 @@ namespace Hoarder.Scripts
 			_stateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
 
 			_isRightDirection = _parent.GlobalPosition.X < GlobalPosition.X;
+
+			PrintItemsPosition();
 		}
 		public override void _Process(Double delta)
 		{
@@ -100,6 +102,24 @@ namespace Hoarder.Scripts
 				_isRightDirection = false;
 				Scale = new Vector2(-1, 1);
 				return;
+			}
+		}
+
+		private Vector2 GetAimedGridTilePosition()
+		{
+			return new Vector2(
+				(Single)Math.Floor(GlobalPosition.X / StaticSettings.GridSize) * StaticSettings.GridSize,
+				(Single)Math.Ceiling(GlobalPosition.Y / StaticSettings.GridSize) * StaticSettings.GridSize
+			);
+		}
+
+		private async void PrintItemsPosition()
+		{
+			while (true)
+			{
+				await ToSignal(GetTree().CreateTimer(5), "timeout");
+				GD.Print(Name + " position: " + GlobalPosition);
+				GD.Print(Name + " snappoint: " + GetAimedGridTilePosition());
 			}
 		}
 	}
