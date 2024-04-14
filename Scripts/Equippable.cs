@@ -122,5 +122,23 @@ namespace Hoarder.Scripts
 				GD.Print(Name + " snappoint: " + GetAimedGridTilePosition());
 			}
 		}
+
+		private Single _timeToMine = 0f;
+		public void Mine()
+		{
+			if(_timeToMine <= 0)
+			{
+
+				_timeToMine = 1f;
+				MineTimerDown();
+			}
+		}
+
+		private async void MineTimerDown()
+		{
+			await ToSignal(GetTree().CreateTimer(1), "timeout");
+			if(_timeToMine > 0)
+				_timeToMine -= 1;
+		}
 	}
 }
