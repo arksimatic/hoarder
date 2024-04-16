@@ -19,7 +19,6 @@ public partial class MapItemsManager : Node2D
 		//var equippable = GetParent().GetNode<Node2D>("Player/EQ");
 		//equippable.Connect("Signal", this, "OnGetSignal");
 		//GD.Print(equippable.Name);
-
 		Equippable equippable = new Equippable();
         	//equippable.Connect("Signal", this, "OnGetSignal");
 
