@@ -21,7 +21,6 @@ public partial class MapItemsManager : Node2D
 		//GD.Print(equippable.Name);
 		Equippable equippable = new Equippable();
         	//equippable.Connect("Signal", this, "OnGetSignal");
-
 	        PrintItemsPosition();
 	}
 
