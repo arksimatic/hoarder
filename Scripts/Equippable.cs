@@ -9,6 +9,9 @@ namespace Hoarder.Scripts
 {
 	public partial class Equippable : Node2D
 	{
+		[Signal] 
+		public delegate void TestEventHandler();
+
 		private Sprite2D _childSprite2D;
 		private CharacterBody2D _parent;
 		private AnimationPlayer _animationPlayer;
@@ -33,6 +36,7 @@ namespace Hoarder.Scripts
 		}
 		public override void _Process(Double delta)
 		{
+			EmitSignal("Test");
 			Move(delta);
 			SwapEquippable();
 			FlipEquippable();

@@ -5,9 +5,9 @@
 [ext_resource type="Script" path="res://Scripts/PlayerMovement.cs" id="3_8uvfh"]
 [ext_resource type="PackedScene" uid="uid://cqetvy28qbkvw" path="res://Scenes/Coal.tscn" id="3_k7orw"]
 [ext_resource type="Script" path="res://Scripts/MapItemsManager.cs" id="3_ws44p"]
-[ext_resource type="Texture2D" uid="uid://gmlfu1741l1f" path="res://Graphics/hoarder.png" id="4_neymw"]
 [ext_resource type="Texture2D" uid="uid://csemesk0nus1j" path="res://Graphics/Equippable/pickaxe.png" id="5_wed6p"]
 [ext_resource type="Script" path="res://Scripts/Equippable.cs" id="6_83t8l"]
+[ext_resource type="Texture2D" uid="uid://gmlfu1741l1f" path="res://Graphics/hoarder.png" id="6_pt7cd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ar8jt"]
 texture = ExtResource("1_m6apn")
@@ -524,7 +524,7 @@ position = Vector2(32, 96)
 script = ExtResource("3_8uvfh")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
-texture = ExtResource("4_neymw")
+texture = ExtResource("6_pt7cd")
 hframes = 6
 vframes = 8
 

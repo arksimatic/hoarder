@@ -2,9 +2,14 @@ using Godot;
 using Hoarder.Scripts;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 
 public partial class MapItemsManager : Node2D
 {
+	[Signal]
+	public delegate void TestEventHandler();
+
+
 	private List<Node2D> _items = new List<Node2D>();
 	public override void _Ready()
 	{
@@ -16,12 +21,11 @@ public partial class MapItemsManager : Node2D
 			}
 		}
 
-		//var equippable = GetParent().GetNode<Node2D>("Player/EQ");
-		//equippable.Connect("Signal", this, "OnGetSignal");
-		//GD.Print(equippable.Name);
-		Equippable equippable = new Equippable();
-        	//equippable.Connect("Signal", this, "OnGetSignal");
-	        PrintItemsPosition();
+		var equippable = GetParent().GetNode<Node2D>("Player/EQ");
+		Callable callable = new Callable(this, nameof(TestSignal));
+		equippable.Connect("Test", callable);
+
+		PrintItemsPosition();
 	}
 
 	public override void _Process(double delta)
@@ -41,8 +45,13 @@ public partial class MapItemsManager : Node2D
 		}
 	}
 
-	public void OnGetSignal()
+	private void TestSignal()
 	{
-		GD.Print("Signal received");
+		GD.Print("Signal works");
 	}
 }
+
+
+
+
+
