@@ -20,11 +20,7 @@ public partial class MapItemsManager : Node2D
 				_items.Add(item as Node2D);
 			}
 		}
-
-		var equippable = GetParent().GetNode<Node2D>("Player/EQ");
-		Callable callable = new Callable(this, nameof(TestSignal));
-		equippable.Connect("Test", callable);
-
+		
 		PrintItemsPosition();
 	}
 
@@ -45,13 +41,8 @@ public partial class MapItemsManager : Node2D
 		}
 	}
 
-	private void TestSignal()
+	private void EQ_Test()
 	{
-		GD.Print("Signal works");
+		GD.Print("EQ_Test");
 	}
 }
-
-
-
-
-
