@@ -162,7 +162,7 @@ namespace Hoarder.Scripts
 				if (_miningTime >= miningUnitTime)
 				{
 					_miningTime -= miningUnitTime;
-					EmitSignal("BreakItemTick", GetAimedGridTilePosition());
+					EmitSignal("BreakItemTick", GetAimedGridTilePosition(), 100);
 				}
 			}
 			else

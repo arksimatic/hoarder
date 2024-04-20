@@ -7,14 +7,14 @@ using System.Linq;
 
 public partial class MapItemsManager : Node2D
 {
-	private List<Node2D> _items = new List<Node2D>();
+	private List<MapItem> _items = new List<MapItem>();
 	public override void _Ready()
 	{
 		foreach(var item in GetChildren())
 		{
-			if (item is Node2D)
+			if (item is MapItem)
 			{
-				_items.Add(item as Node2D);
+				_items.Add(item as MapItem);
 			}
 		}
 		
@@ -43,13 +43,17 @@ public partial class MapItemsManager : Node2D
 		//GD.Print("EQ_Test");
 	}
 
-	private void EQ_BreakItemTick(Vector2 equippablePosition)
-    {
-        Node2D item = _items.Where(item => item.Position.X == equippablePosition.X && item.Position.Y == equippablePosition.Y).FirstOrDefault();
+	private void EQ_BreakItemTick(Vector2 equippablePosition, Int32 damage)
+	{
+		MapItem item = _items.Where(item => item.Position.X == equippablePosition.X && item.Position.Y == equippablePosition.Y).FirstOrDefault();
 		if(item != null)
 		{
-			item.QueueFree();
-			_items.Remove(item);
+			item.OnDamaged(damage);
+			if(item.Health <= 0)
+			{
+				item.QueueFree();
+				_items.Remove(item);
+			}
 		}
 		GD.Print("BREAK ITEM TICK");
 	}

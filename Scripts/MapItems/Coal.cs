@@ -2,9 +2,9 @@ using Godot;
 using System;
 using System.Collections;
 
-public partial class Coal : Node2D
+public partial class Coal : MapItem
 {
-	public Int32 Health = 100;
+	public override Int32 Health { get; set; } = 100;
 	private CustomSignals _customSignals;
 	public override void _Ready()
 	{
@@ -15,9 +15,9 @@ public partial class Coal : Node2D
 	{
 		
 	}
-	public void OnDamaged()
+	public override void OnDamaged(Int32 damage)
 	{
-		Health -= 40;
+		Health -= damage;
 		if (Health <= 0)
 		{
 			DestroyCoal();
