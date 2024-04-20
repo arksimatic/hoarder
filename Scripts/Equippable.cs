@@ -10,7 +10,10 @@ namespace Hoarder.Scripts
 	public partial class Equippable : Node2D
 	{
 		[Signal] 
-		public delegate void TestEventHandler();
+		public delegate void TestEventHandler(Vector2 equippablePosition);
+
+		[Signal]
+		public delegate void BreakItemTickEventHandler();
 
 		private Sprite2D _childSprite2D;
 		private CharacterBody2D _parent;
@@ -22,6 +25,8 @@ namespace Hoarder.Scripts
 		private Single _imageShiftX = 7f;
 		private Single _imageShiftY = -4f;
 		private Single _buffer => _imageShiftX + 1f;
+		private Boolean _isMining = false;
+		private Single _miningTime = 0;
 		public override void _Ready()
 		{
 			_childSprite2D = (Sprite2D)GetNode("Sprite2D");
@@ -36,7 +41,8 @@ namespace Hoarder.Scripts
 		}
 		public override void _Process(Double delta)
 		{
-			EmitSignal("Test");
+			UpdateMining(delta);
+			//EmitSignal("Test");
 			Move(delta);
 			SwapEquippable();
 			FlipEquippable();
@@ -143,6 +149,27 @@ namespace Hoarder.Scripts
 			await ToSignal(GetTree().CreateTimer(1), "timeout");
 			if(_timeToMine > 0)
 				_timeToMine -= 1;
+		}
+
+		private void UpdateMining(Double delta)
+		{
+			Single miningUnitTime = 1f;
+
+			if (Input.IsActionPressed(KeyCode.Action))
+			{
+				_isMining = true;
+				_miningTime += Convert.ToSingle(delta);
+				if (_miningTime >= miningUnitTime)
+				{
+					_miningTime -= miningUnitTime;
+					EmitSignal("BreakItemTick", GetAimedGridTilePosition());
+				}
+			}
+			else
+			{
+				_miningTime = 0;
+				_isMining = false;
+			}
 		}
 	}
 }

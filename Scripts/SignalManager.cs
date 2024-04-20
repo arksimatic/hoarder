@@ -34,6 +34,12 @@ namespace Hoarder.Scripts
                     CallingObjectPath = "Player/EQ",
                     RecivingObjectPath = "MapItems",
                     SignalName = "Test"
+                },
+                new PreSignal
+                {
+                    CallingObjectPath = "Player/EQ",
+                    RecivingObjectPath = "MapItems",
+                    SignalName = "BreakItemTick"
                 }
             };
 

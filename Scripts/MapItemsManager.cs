@@ -3,13 +3,10 @@ using Hoarder.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq;
 
 public partial class MapItemsManager : Node2D
 {
-	[Signal]
-	public delegate void TestEventHandler();
-
-
 	private List<Node2D> _items = new List<Node2D>();
 	public override void _Ready()
 	{
@@ -43,6 +40,17 @@ public partial class MapItemsManager : Node2D
 
 	private void EQ_Test()
 	{
-		GD.Print("EQ_Test");
+		//GD.Print("EQ_Test");
+	}
+
+	private void EQ_BreakItemTick(Vector2 equippablePosition)
+    {
+        Node2D item = _items.Where(item => item.Position.X == equippablePosition.X && item.Position.Y == equippablePosition.Y).FirstOrDefault();
+		if(item != null)
+		{
+			item.QueueFree();
+			_items.Remove(item);
+		}
+		GD.Print("BREAK ITEM TICK");
 	}
 }
