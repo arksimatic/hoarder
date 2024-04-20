@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqetvy28qbkvw"]
 
-[ext_resource type="Script" path="res://Scripts/Coal.cs" id="1_3oiec"]
+[ext_resource type="Script" path="res://Scripts/MapItems/CoalMapObject.cs" id="1_1n8tp"]
 [ext_resource type="Texture2D" uid="uid://d43ekui636h2" path="res://Graphics/coal.png" id="1_32h7r"]
 
 [node name="Coal" type="Node2D"]
-script = ExtResource("1_3oiec")
+script = ExtResource("1_1n8tp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_32h7r")

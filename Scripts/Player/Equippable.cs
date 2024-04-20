@@ -1,4 +1,5 @@
 using Godot;
+using Hoarder.Scripts.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace Hoarder.Scripts
 {
-	public partial class Equippable : Node2D
+    public partial class Equippable : Node2D
 	{
-		[Signal] 
-		public delegate void TestEventHandler(Vector2 equippablePosition);
-
 		[Signal]
 		public delegate void BreakItemTickEventHandler();
 
@@ -42,7 +40,6 @@ namespace Hoarder.Scripts
 		public override void _Process(Double delta)
 		{
 			UpdateMining(delta);
-			//EmitSignal("Test");
 			Move(delta);
 			SwapEquippable();
 			FlipEquippable();

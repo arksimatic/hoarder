@@ -5,25 +5,20 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 
-public partial class MapItemsManager : Node2D
+public partial class MapObjectsManager : Node2D
 {
-	private List<MapItem> _items = new List<MapItem>();
+	private List<MapObject> _items = new List<MapObject>();
 	public override void _Ready()
 	{
 		foreach(var item in GetChildren())
 		{
-			if (item is MapItem)
+			if (item is MapObject)
 			{
-				_items.Add(item as MapItem);
+				_items.Add(item as MapObject);
 			}
 		}
 		
 		PrintItemsPosition();
-	}
-
-	public override void _Process(double delta)
-	{
-		
 	}
 
 	private async void PrintItemsPosition()
@@ -38,14 +33,9 @@ public partial class MapItemsManager : Node2D
 		}
 	}
 
-	private void EQ_Test()
-	{
-		//GD.Print("EQ_Test");
-	}
-
 	private void EQ_BreakItemTick(Vector2 equippablePosition, Int32 damage)
 	{
-		MapItem item = _items.Where(item => item.Position.X == equippablePosition.X && item.Position.Y == equippablePosition.Y).FirstOrDefault();
+		MapObject item = _items.Where(item => item.Position.X == equippablePosition.X && item.Position.Y == equippablePosition.Y).FirstOrDefault();
 		if(item != null)
 		{
 			item.OnDamaged(damage);
@@ -55,6 +45,5 @@ public partial class MapItemsManager : Node2D
 				_items.Remove(item);
 			}
 		}
-		GD.Print("BREAK ITEM TICK");
 	}
 }

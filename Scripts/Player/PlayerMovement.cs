@@ -1,7 +1,6 @@
 using Godot;
-using Hoarder.Scripts;
+using Hoarder.Scripts.Player;
 using System;
-using System.Net;
 
 public partial class PlayerMovement : CharacterBody2D
 {
