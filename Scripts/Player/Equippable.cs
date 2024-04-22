@@ -1,10 +1,6 @@
 using Godot;
 using Hoarder.Scripts.Player;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hoarder.Scripts
 {
@@ -25,6 +21,8 @@ namespace Hoarder.Scripts
 		private Single _buffer => _imageShiftX + 1f;
 		private Boolean _isMining = false;
 		private Single _miningTime = 0;
+
+		private Single _itemRadius = 20f;
 		public override void _Ready()
 		{
 			_childSprite2D = (Sprite2D)GetNode("Sprite2D");
@@ -61,24 +59,11 @@ namespace Hoarder.Scripts
 
 		private void Move(Double delta)
 		{
-			Vector2 destination = TrimToPlayerCircle(GetGlobalMousePosition(), _parent.GlobalPosition);
-			GlobalPosition = GlobalPosition.MoveToward(destination, Convert.ToSingle(delta * 25_000));
+			Vector2 destination = HMath.TrimToCircle(GetGlobalMousePosition(), _parent.GlobalPosition, _itemRadius);
+			GlobalPosition = VisualShift(destination);
 		}
 
-		private Vector2 TrimToPlayerCircle(Vector2 mousePosition, Vector2 parentPosition)
-		{
-			Vector2 shift = _isRightDirection ? new Vector2(-_imageShiftX, _imageShiftY) : new Vector2(_imageShiftX, _imageShiftY);
-			Vector2 destination = mousePosition + shift;
-			Vector2 direction = (destination - parentPosition).Normalized();
-			Single distance = parentPosition.DistanceTo(destination);
-			if (distance > 20)
-			{
-				destination = parentPosition + direction * 20;
-			}
-			return destination;
-		}
-
-		public void SwapEquippable()
+        public void SwapEquippable()
 		{
 			if (Input.IsKeyPressed(Key.Q))
 			{
@@ -106,16 +91,18 @@ namespace Hoarder.Scripts
 			if(_parent.GlobalPosition.X > GlobalPosition.X + _buffer && _isRightDirection)
 			{
 				_isRightDirection = false;
-				Scale = new Vector2(-1, 1);
+                Scale = new Vector2(-1, 1);
 				return;
 			}
 		}
 
 		private Vector2 GetAimedGridTilePosition()
 		{
-			return new Vector2(
-				(Single)Math.Floor((GlobalPosition.X) / StaticSettings.GridSize) * StaticSettings.GridSize,
-				(Single)Math.Ceiling((GlobalPosition.Y) / StaticSettings.GridSize) * StaticSettings.GridSize
+            Vector2 pos = HMath.TrimToCircle(GetGlobalMousePosition(), _parent.GlobalPosition, _itemRadius);
+
+            return new Vector2(
+				(Single)Math.Floor((pos.X + StaticSettings.GridSize / 2) / StaticSettings.GridSize) * StaticSettings.GridSize,
+				(Single)Math.Floor((pos.Y + StaticSettings.GridSize / 2) / StaticSettings.GridSize) * StaticSettings.GridSize
 			);
 		}
 
@@ -126,6 +113,7 @@ namespace Hoarder.Scripts
 				await ToSignal(GetTree().CreateTimer(5), "timeout");
                 GD.Print(Name + " parent: " + GetParent<Node2D>().GlobalPosition);
                 GD.Print(Name + " position: " + GlobalPosition);
+				GD.Print(Name + " weird point position: " + HMath.TrimToCircle(GetGlobalMousePosition(), _parent.GlobalPosition, _itemRadius));
 				GD.Print(Name + " snappoint: " + GetAimedGridTilePosition());
 			}
 		}
@@ -168,5 +156,11 @@ namespace Hoarder.Scripts
 				_isMining = false;
 			}
 		}
-	}
+
+		private Vector2 VisualShift(Vector2 original)
+		{
+            Vector2 shift = _isRightDirection ? new Vector2(-_imageShiftX, _imageShiftY) : new Vector2(_imageShiftX, _imageShiftY);
+			return new Vector2(original.X + shift.X, original.Y + shift.Y);
+        }
+    }
 }

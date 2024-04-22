@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://b2nhvxq6h7tyo"]
+[gd_scene load_steps=50 format=3 uid="uid://b2nhvxq6h7tyo"]
 
 [ext_resource type="Texture2D" uid="uid://dh6i2fff606ne" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_.png" id="1_m6apn"]
 [ext_resource type="Texture2D" uid="uid://dj4231x5jb5hg" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_ [resources].png" id="2_b87qm"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://gmlfu1741l1f" path="res://Graphics/hoarder.png" id="6_pt7cd"]
 [ext_resource type="Script" path="res://Scripts/Player/Equippable.cs" id="8_too4q"]
 [ext_resource type="Script" path="res://Scripts/SignalManager.cs" id="9_e7jp2"]
+[ext_resource type="Texture2D" uid="uid://kos750aodh63" path="res://icon.svg" id="9_toph6"]
+[ext_resource type="Script" path="res://Scripts/Player/EQTest.cs" id="10_hl5su"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ar8jt"]
 texture = ExtResource("1_m6apn")
@@ -570,6 +572,11 @@ libraries = {
 tree_root = SubResource("AnimationNodeStateMachine_ywrl6")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(-0.103685, -0.309645)
+
+[node name="EQTest" type="Sprite2D" parent="Player"]
+scale = Vector2(0.01, 0.01)
+texture = ExtResource("9_toph6")
+script = ExtResource("10_hl5su")
 
 [node name="SignalManager" type="Node2D" parent="."]
 script = ExtResource("9_e7jp2")
