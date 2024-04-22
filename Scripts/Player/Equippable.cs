@@ -61,8 +61,7 @@ namespace Hoarder.Scripts
 
 		private void Move(Double delta)
 		{
-			Vector2 mouse_position = GetGlobalMousePosition();
-			Vector2 destination = TrimToPlayerCircle(mouse_position, _parent.GlobalPosition);
+			Vector2 destination = TrimToPlayerCircle(GetGlobalMousePosition(), _parent.GlobalPosition);
 			GlobalPosition = GlobalPosition.MoveToward(destination, Convert.ToSingle(delta * 25_000));
 		}
 
@@ -115,8 +114,8 @@ namespace Hoarder.Scripts
 		private Vector2 GetAimedGridTilePosition()
 		{
 			return new Vector2(
-				(Single)Math.Floor(GlobalPosition.X / StaticSettings.GridSize) * StaticSettings.GridSize,
-				(Single)Math.Ceiling(GlobalPosition.Y / StaticSettings.GridSize) * StaticSettings.GridSize
+				(Single)Math.Floor((GlobalPosition.X) / StaticSettings.GridSize) * StaticSettings.GridSize,
+				(Single)Math.Ceiling((GlobalPosition.Y) / StaticSettings.GridSize) * StaticSettings.GridSize
 			);
 		}
 
@@ -125,7 +124,8 @@ namespace Hoarder.Scripts
 			while (true)
 			{
 				await ToSignal(GetTree().CreateTimer(5), "timeout");
-				GD.Print(Name + " position: " + GlobalPosition);
+                GD.Print(Name + " parent: " + GetParent<Node2D>().GlobalPosition);
+                GD.Print(Name + " position: " + GlobalPosition);
 				GD.Print(Name + " snappoint: " + GetAimedGridTilePosition());
 			}
 		}

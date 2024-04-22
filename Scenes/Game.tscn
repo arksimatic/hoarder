@@ -1,10 +1,9 @@
-[gd_scene load_steps=49 format=3 uid="uid://b2nhvxq6h7tyo"]
+[gd_scene load_steps=48 format=3 uid="uid://b2nhvxq6h7tyo"]
 
 [ext_resource type="Texture2D" uid="uid://dh6i2fff606ne" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_.png" id="1_m6apn"]
 [ext_resource type="Texture2D" uid="uid://dj4231x5jb5hg" path="res://ExternalAssets/fantasy_ [version 2.0]/forest_/forest_ [resources].png" id="2_b87qm"]
 [ext_resource type="Script" path="res://Scripts/MapItems/MapObjectsManager.cs" id="3_3mq41"]
 [ext_resource type="PackedScene" uid="uid://cqetvy28qbkvw" path="res://Scenes/Coal.tscn" id="3_k7orw"]
-[ext_resource type="Script" path="res://Scripts/MapItems/CoalMapObject.cs" id="5_hjsq2"]
 [ext_resource type="Texture2D" uid="uid://csemesk0nus1j" path="res://Graphics/Equippable/pickaxe.png" id="5_wed6p"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerMovement.cs" id="6_6jhjp"]
 [ext_resource type="Texture2D" uid="uid://gmlfu1741l1f" path="res://Graphics/hoarder.png" id="6_pt7cd"]
@@ -518,11 +517,9 @@ script = ExtResource("3_3mq41")
 
 [node name="Coal" parent="MapItems" instance=ExtResource("3_k7orw")]
 position = Vector2(0, 96)
-script = ExtResource("5_hjsq2")
 
 [node name="Coal2" parent="MapItems" instance=ExtResource("3_k7orw")]
 position = Vector2(32, 96)
-script = ExtResource("5_hjsq2")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("6_6jhjp")
