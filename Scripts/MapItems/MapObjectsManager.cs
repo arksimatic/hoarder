@@ -26,6 +26,7 @@ public partial class MapObjectsManager : Node2D
 		while (true)
 		{
 			await ToSignal(GetTree().CreateTimer(5), "timeout");
+
 			foreach (var item in _items)
 			{
 				GD.Print(item.Name + " position: " + item.GlobalPosition);
