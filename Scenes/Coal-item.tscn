@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://b0jqaakgb7s5o"]
+[gd_scene load_steps=2 format=3 uid="uid://b0jqaakgb7s5o"]
+
+[ext_resource type="Texture2D" uid="uid://ddttf2ga2oina" path="res://Graphics/coal-item.png" id="1_qhcni"]
 
 [node name="Coal-item" type="Node"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qhcni")
