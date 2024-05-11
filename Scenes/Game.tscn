@@ -540,9 +540,6 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="Player"]
-libraries = {
-"": SubResource("AnimationLibrary_fwetb")
-}
 tree_root = SubResource("AnimationNodeStateMachine_b6pid")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(1.12339, -0.218107)
@@ -566,9 +563,6 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="Player/EQ"]
-libraries = {
-"": SubResource("AnimationLibrary_0rwr0")
-}
 tree_root = SubResource("AnimationNodeStateMachine_ywrl6")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(-0.103685, -0.309645)
