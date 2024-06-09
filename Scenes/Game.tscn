@@ -518,10 +518,10 @@ layer_0/tile_data = PackedInt32Array(983054, 720898, 3, 983053, 720898, 4, 98305
 script = ExtResource("3_3mq41")
 
 [node name="Coal" parent="MapItems" instance=ExtResource("3_k7orw")]
-position = Vector2(0, 96)
+position = Vector2(96, 256)
 
 [node name="Coal2" parent="MapItems" instance=ExtResource("3_k7orw")]
-position = Vector2(32, 96)
+position = Vector2(64, 256)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 script = ExtResource("6_6jhjp")
@@ -568,6 +568,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(-0.103685, -0.309645)
 
 [node name="EQTest" type="Sprite2D" parent="Player"]
+visible = false
 scale = Vector2(0.01, 0.01)
 texture = ExtResource("9_toph6")
 script = ExtResource("10_hl5su")
